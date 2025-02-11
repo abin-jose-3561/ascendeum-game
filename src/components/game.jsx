@@ -27,9 +27,6 @@ const Game = () => {
       setNewTime(now);
     }
     if (start) {
-      const date = new Date();
-      const now = date.getTime();
-      setPreviousClickTime(now);
       timer = setInterval(() => {
         setSelectedCell(randomCell());
       }, delay * 1000);
@@ -41,10 +38,8 @@ const Game = () => {
     const date = new Date();
     const now = date.getTime();
     setNewTime(now);
-    console.log(now);
 
     const difference = ((now - newTime) / 1000).toFixed(2);
-    console.log(difference);
 
     const newItem = {
       clickNumber: mouseClick.length + 1,
@@ -54,7 +49,6 @@ const Game = () => {
     setMouseClick((prev) => [...prev, newItem]);
   };
 
-  console.log();
   const handleInputChange = (value) => {
     const delaySlected = parseInt(value);
     if (delaySlected <= 10) setDelay(delaySlected);
