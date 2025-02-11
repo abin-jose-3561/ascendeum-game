@@ -4,13 +4,11 @@ const Game = () => {
   const rows = 10;
   const cells = rows * rows;
   const initialCell = Array(cells).fill(null);
-  const [board, setBoard] = useState(initialCell);
+  const [board] = useState(initialCell);
   const [start, setStart] = useState(false);
   const [delay, setDelay] = useState(1);
   const [selectedCell, setSelectedCell] = useState(null);
-  const [previousClickTime, setPreviousClickTime] = useState();
   const [newTime, setNewTime] = useState();
-  const [pausedTime, setPausedTime] = useState();
   const [mouseClick, setMouseClick] = useState([]);
 
   const randomCell = () => {
@@ -48,7 +46,6 @@ const Game = () => {
     const difference = ((now - newTime) / 1000).toFixed(2);
     console.log(difference);
 
-    setPreviousClickTime(difference + delay * 1000);
     const newItem = {
       clickNumber: mouseClick.length + 1,
       clickTime: difference,
@@ -72,7 +69,6 @@ const Game = () => {
     const now = date.getTime();
     setStart(false);
     setSelectedCell(null);
-    setPausedTime(now);
   };
 
   return (
@@ -100,6 +96,7 @@ const Game = () => {
         {board.map((item, index) => {
           return (
             <button
+              key={item}
               className={`cell ${selectedCell === index ? "selectedCell" : ""}`}
               onClick={handleCellClick}
               disabled={selectedCell !== index}
@@ -122,7 +119,7 @@ const Game = () => {
           <tbody>
             {mouseClick.map((item) => {
               return (
-                <tr>
+                <tr key={item.clickNumber}>
                   <td className="data-cell">{item.clickNumber}</td>
                   <td className="data-cell">{item.clickTime}</td>
                 </tr>
